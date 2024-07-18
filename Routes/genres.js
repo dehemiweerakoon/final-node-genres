@@ -41,7 +41,7 @@ routes.put('/:id',(req,res)=>{
     const  genre = genres.find((genre)=>genre.id === parseInt(req.params.id));
     if(!genre) return res.status(404).send("The genre with ID not found");
     // validate the input
-    const {error} = validateGenres(req.params.id);
+    const {error} = validateGenres(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     // update the course
     genre.name = req.body.name;
@@ -54,7 +54,7 @@ routes.delete('/:id',(req,res)=>{
     if(!genre) return res.status(404).send("The genre with ID not found");
 
     // delete genre
-    const index  = genres(indexOf(genre));
+    const index  = genres.indexOf(genre);
     genres.splice(index,1);
     res.send(genre);
 });
