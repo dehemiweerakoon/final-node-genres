@@ -13,6 +13,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/vidly')  // auto matically create a 
     .then(()=>console.log('Connected to the Database'))
     .catch((error)=>console.log(error));
 
+if(app.get('env') === 'development'){
+    app.use(morgan('tiny'));
+    Debugger('Morgan Enabled');
+}
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(helmet());
@@ -21,11 +25,6 @@ app.use('/api/genres',genre);
 app.use('/api/customer',customer);
 app.use('/api/movies',movie);
 app.use('/api/rental',rental);
-
-if(app.get('env') === 'development'){
-    app.use(morgan('tiny'));
-    Debugger('Morgan Enabled');
-}
 
 app.get('/', (req, res) => {
     res.send('Hello World!')

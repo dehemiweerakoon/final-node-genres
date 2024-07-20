@@ -3,7 +3,10 @@ const routes = express.Router();
 const { Rental,validateRental} = require('../models/rental');
 const {Customer} = require('../models/customer');
 const {Movie} = require('../models/Movie');
-const { route } = require("./movies");
+const { default: mongoose } = require("mongoose");
+// const Fawn = require('fawn')
+
+// Fawn.init(mongoose);
 
 routes.get('/',async(req,res)=>{  
     const rental = await Rental.find().sort('-dateOut'); //decending order
@@ -35,6 +38,11 @@ routes.post('/',async(req,res)=>{
             dailyRentalPrice : movie.dailyRentalPrice
         }
      });
+    
+     // new Fawn.Task()
+     //  .save('rentals',rental);
+     //  .update('movies',{_id:movie:id},{$inc:{numberInstock:-1}}).run();
+     
      rental = await rental.save();
      movie.numberInStock--;
      movie.save();
@@ -60,7 +68,7 @@ routes.put('/:id',async (req,res)=>{
         },
         movie : {
             _id : movie._id,
-            titel :movie.title,
+            title :movie.title,
             dailyRentalPrice : movie.dailyRentalPrice
         }
      });
