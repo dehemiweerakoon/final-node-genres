@@ -3,7 +3,6 @@ const routes = express.Router();
 const { Rental,validateRental} = require('../models/rental');
 const {Customer} = require('../models/customer');
 const {Movie} = require('../models/Movie');
-const { default: mongoose } = require("mongoose");
 // const Fawn = require('fawn')
 
 // Fawn.init(mongoose);
