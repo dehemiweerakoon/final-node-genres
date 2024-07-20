@@ -1,16 +1,16 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-
-
-const Genre =mongoose.model('Genre',new mongoose.Schema({
+const genreschema = new mongoose.Schema({
     name : {
      type: String,
      required: true,
      minlength :5,
      maxlength:50
     }
-  }));
+  });
+
+const Genre =mongoose.model('Genre',genreschema);
 
   // validate genres
 
@@ -23,5 +23,6 @@ const validateGenres = (genre) =>{
 
 module.exports = {
     Genre,
-    validateGenres
+    validateGenres,
+    genreschema
 }

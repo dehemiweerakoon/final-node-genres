@@ -6,6 +6,7 @@ const Debugger = require('debug')('app:startup');
 const genre = require('./Routes/genres');
 const mongoose = require ('mongoose');
 const customer = require('./Routes/customer');
+const movie = require('./Routes/movies');
 
 mongoose.connect('mongodb://127.0.0.1:27017/vidly')  // auto matically create a database
     .then(()=>console.log('Connected to the Database'))
@@ -17,6 +18,7 @@ app.use(helmet());
 app.use(express.static('public'));
 app.use('/api/genres',genre);
 app.use('/api/customer',customer);
+app.use('/api/movies',movie)
 
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
