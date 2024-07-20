@@ -10,6 +10,8 @@ const movie = require('./Routes/movies');
 const rental = require('./Routes/rental');
 const Joi = require('joi');
 Joi.objectId =require('joi-objectid')(Joi);
+const user = require('./Routes/user');
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/vidly')  // auto matically create a database
     .then(()=>console.log('Connected to the Database'))
@@ -27,6 +29,7 @@ app.use('/api/genres',genre);
 app.use('/api/customer',customer);
 app.use('/api/movies',movie);
 app.use('/api/rental',rental);
+app.use('/api/user',user);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
