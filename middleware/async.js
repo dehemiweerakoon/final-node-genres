@@ -3,7 +3,7 @@ function asyncMiddleware(handler){
        try {
       await  handler(req,res);
     } catch (ex) {
-      next();
+      next(ex);
     }
     }
   }
