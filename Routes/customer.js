@@ -2,6 +2,7 @@ const express = require('express');
 const routes = express.Router();
 const Joi = require('joi');
 const {Customer,validate} = require('../models/customer');
+const auth = require('../middleware/auth');
 
 routes.get('/',async(req,res)=>{
   try {
@@ -22,7 +23,7 @@ routes.get('/:id',async(req,res)=>{
    }
 });
 
-routes.post('/',async(req,res)=>{ 
+routes.post('/',auth,async(req,res)=>{ 
    const {error} = validate(req.body);
    if(error) return res.status(400).send(error.details[0].message);
 
@@ -43,7 +44,7 @@ routes.post('/',async(req,res)=>{
    
 });
 
-routes.put('/:id',async(req,res)=>{
+routes.put('/:id',auth,async(req,res)=>{
     const {error} = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -65,7 +66,7 @@ routes.put('/:id',async(req,res)=>{
    
 });
 
-routes.delete('/:id',async(req,res)=>{
+routes.delete('/:id',auth,async(req,res)=>{
     const customer = await Customer.findOneAndDelete(req.params.id);
     if(!customer) return res.status(404).send('Customer with given id not found');
 

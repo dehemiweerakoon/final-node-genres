@@ -12,6 +12,13 @@ const Joi = require('joi');
 Joi.objectId =require('joi-objectid')(Joi);
 const user = require('./Routes/user');
 const auth = require('./Routes/auth');
+const config = require('config');
+const error = require('./middleware/error')
+
+if(!config.get('jwtPrivateKey')){
+    console.error('Fatel error'); //$env:vidly_jwtPrivateKey="myprivateKey"
+    process.exit(1); //error
+}
 
 mongoose.connect('mongodb://127.0.0.1:27017/vidly')  // auto matically create a database
     .then(()=>console.log('Connected to the Database'))
@@ -21,6 +28,8 @@ if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
     Debugger('Morgan Enabled');
 }
+
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(helmet());
@@ -31,6 +40,7 @@ app.use('/api/movies',movie);
 app.use('/api/rental',rental);
 app.use('/api/user',user);
 app.use('/api/auth',auth);
+app.use(error);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')

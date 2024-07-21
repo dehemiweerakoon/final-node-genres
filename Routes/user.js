@@ -3,6 +3,7 @@ const express = require("express");
 const routes = express.Router();
 const _ = require('lodash');
 const bcrypt = require('bcrypt')
+const auth = require('../middleware/auth');
 
 routes.post('/',async(req,res)=>{
     const {error} =  validateUser(req.body);
@@ -17,12 +18,19 @@ routes.post('/',async(req,res)=>{
     user.password= await bcrypt.hash(user.password,salt);
         try {
             await user.save();     
-            res.send(_.pick(user,['name','email','_id']));
+            const token = user.generateAuthToken();       
+            res.header('x-auth-token',token).send(_.pick(user,['name','email','_id']));
+            
         } catch (error) {
             res.status(500).send(error.message);
         }
- 
+    ///infromation expert system
 })
 
+routes.get('/me',auth,async(req,res)=>{
+    const user = await User.findById(req.user._id).select('-password');
+    //console.log(user);
+    res.send(user);
+});
 
 module.exports = routes

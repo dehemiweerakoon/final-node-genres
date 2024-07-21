@@ -3,7 +3,6 @@ const express = require("express");
 const routes = express.Router();
 const _ = require('lodash');
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
 
 routes.post('/',async(req,res)=>{
     const {error} =  validateAuth(req.body);
@@ -15,7 +14,8 @@ routes.post('/',async(req,res)=>{
     const result = await bcrypt.compare(req.body.password,user.password);
     if(!result) return res.status(400).send('Invalid User or password');
 
-    const token =jwt.sign({__id:user.id},'jwtPrivateKey');
+   // const token_1 = user.generateAuthToken();
+    const token =user.generateAuthToken();
 
     res.send(token);
 });
