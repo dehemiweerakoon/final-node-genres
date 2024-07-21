@@ -11,17 +11,12 @@ routes.get('/',asyncMiddleware(async(req,res)=>{
 }));
 
 routes.get('/:id',async(req,res)=>{
-  try {
       const genre = await Genre.findById(req.params.id);
       if(genre){
         res.send(genre);
       }else{
         res.send('The genre with ID not Found');
       }
-  } catch (error) {
-     console.log(error.message);
-     res.status(500).send("Something wrong");
-  }
  
 });
 
