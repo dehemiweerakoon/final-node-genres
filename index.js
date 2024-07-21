@@ -15,9 +15,7 @@ const auth = require('./Routes/auth');
 const config = require('config');
 const error = require('./middleware/error');
 require('express-async-errors');
-const winston = require('winston');
 
-winston.add(winston.transports.File,{filename:'logfile.log'});
 
 if(!config.get('jwtPrivateKey')){
     console.error('Fatel error'); //$env:vidly_jwtPrivateKey="myprivateKey"
