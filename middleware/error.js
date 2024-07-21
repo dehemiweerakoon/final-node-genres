@@ -10,10 +10,11 @@ module.exports =function(err,req,res,next){
     winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: "error.log", level: "warn" }),
+    // new winston.transports.File({ filename: "error.log", level: "warn" }),
     new winston.transports.File({ filename: "app.log" , level:"info"}),
   ],
 });
+logger.error(err.message,err);
     console.error(err);
 
     res.status(500).send('Someting Failed');

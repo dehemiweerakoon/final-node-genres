@@ -14,8 +14,23 @@ const user = require('./Routes/user');
 const auth = require('./Routes/auth');
 const config = require('config');
 const error = require('./middleware/error');
+const winston = require('winston');
+const logger = require('./middleware/logger');
 require('express-async-errors');
 
+process.on('uncaughtException',(ex)=>{  // like the errors the not in API calls
+    console.log('We got Uncaught exception');
+    logger(ex);
+    winston.error(ex.message,ex);
+    //process.exit(1);
+});
+
+process.on('unhandledRejection',(ex)=>{ 
+    logger(ex);
+    winston.error(ex.message,ex);
+    console.log('We got unhandled rejection');
+    //process.exit(1);
+});
 
 if(!config.get('jwtPrivateKey')){
     console.error('Fatel error'); //$env:vidly_jwtPrivateKey="myprivateKey"
@@ -43,6 +58,7 @@ app.use('/api/rental',rental);
 app.use('/api/user',user);
 app.use('/api/auth',auth);
 app.use(error);
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
