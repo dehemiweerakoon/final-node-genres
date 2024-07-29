@@ -6,7 +6,6 @@ const admin = require('../middleware/admin');
 const asyncMiddleware = require('../middleware/async');
 
 routes.get('/',asyncMiddleware(async(req,res)=>{
-  throw new Error('get an error');
   const genres = await Genre.find().sort('name');
   res.send(genres);
 }));
