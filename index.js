@@ -6,20 +6,16 @@ const Debugger = require('debug')('app:startup'); //$env:DEBUG="app:startup"
 const Joi = require('joi');
 Joi.objectId =require('joi-objectid')(Joi);
 require('express-async-errors');
-
+//
 require('./startup/logging')();
 require('./startup/db')();
 require('./startup/config')();
-
      //$env:vidly_jwtPrivateKey="myprivateKey"
      //error
-
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
     Debugger('Morgan Enabled');
 }
-
-
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(helmet());
