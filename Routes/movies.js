@@ -79,6 +79,17 @@ routes.delete('/:id',auth,async(req,res)=>{
         res.send(error.message);
     } 
 });
+routes.get('/ByGenre/:id',auth,async(req,res)=>{
+    try {
+        const movies = await Movie.find({'genre._id':req.params.id});
+        if(!movies) return res.status(404).send('The movie not found');
+
+        // 
+        res.send(movies);
+    } catch (error) {
+        
+    }
+})
 
 module.exports = routes;
 

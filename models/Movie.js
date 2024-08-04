@@ -25,6 +25,9 @@ const Movie = mongoose.model('Movies', new mongoose.Schema({
     required : true,
     min: 0,
     max: 255
+  },
+  img :{
+    type: String
   }
 }));
 
