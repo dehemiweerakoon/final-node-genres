@@ -18,7 +18,7 @@ routes.get('/:id',asyncMiddleware(async(req,res)=>{
         res.send('The genre with ID not Found');
       }
  
-}));
+}));// 
 
 routes.post('/',auth,asyncMiddleware(async(req,res)=>{
     // validate whether the data is correct or not
