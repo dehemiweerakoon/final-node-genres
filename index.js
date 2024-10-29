@@ -12,6 +12,7 @@ require('./startup/db')();
 require('./startup/config')();
      //$env:vidly_jwtPrivateKey="myprivateKey"
      //error
+     // hekllo
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
     Debugger('Morgan Enabled');
